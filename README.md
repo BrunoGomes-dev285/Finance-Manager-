@@ -1,2 +1,3 @@
-# Finance-Manager-
-Projeto em Python
+# Gerenciador Financeiro
+
+Projeto em Python com Tkinter, SQLite, pandas e matplotlib.
