@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 ARQUIVO_BANCO = Path(__file__).with_name("finance_manager.db")
-ARQUIVO_SQL = Path(__file__).with_name("BD_ProjetoPython_sqlite.sql")
+ARQUIVO_SQL = Path(__file__).with_name("banco_sqlite.sql")
 
 
 def conectar():
