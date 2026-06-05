@@ -51,9 +51,10 @@ def abrir_login():
         if usuario:
             janela_l.destroy()
 
-            from main import abrir_main
+            from principal import AplicativoFinanceiro
 
-            abrir_main(usuario)
+            aplicativo = AplicativoFinanceiro(usuario)
+            aplicativo.mainloop()
         else:
             messagebox.showerror("Erro", "Email ou senha incorretos.") #Caso alguma das credenciais estejam incorretas
 
