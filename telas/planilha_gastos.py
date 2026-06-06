@@ -40,18 +40,26 @@ class TelaPlanilhaGastos(PaginaBase):
 
         self.criar_cabecalho("Planilha de Gastos", "Cadastro e controle dos gastos do sistema.")
 
-        mensagem = tk.Label(self, text="", font=("Segoe UI", 11, "bold"), bg=self.cores["fundo"], fg=self.cores["texto_suave"])
-        mensagem.grid(row=1, column=0, sticky="ew", padx=32)
+        corpo = tk.Frame(self, bg=self.cores["fundo"])
+        corpo.grid(row=1, column=0, sticky="nsew", padx=32, pady=12)
+        corpo.grid_columnconfigure(0, weight=1)
+
+        mensagem = tk.Label(
+            corpo,
+            text="",
+            font=("Segoe UI", 11, "bold"),
+            bg=self.cores["fundo"],
+            fg=self.cores["texto_suave"],
+        )
+        mensagem.grid(row=0, column=0, sticky="ew")
+        mensagem.grid_remove()
 
         def mostrar_mensagem(texto, cor="white"):
             mensagem.config(text=texto, fg=cor)
-
-        corpo = tk.Frame(self, bg=self.cores["fundo"])
-        corpo.grid(row=2, column=0, sticky="nsew", padx=32, pady=12)
-        corpo.grid_columnconfigure(0, weight=1)
+            mensagem.grid()
 
         formulario = self.criar_painel(corpo)
-        formulario.grid(row=0, column=0, sticky="ew", pady=(0, 18))
+        formulario.grid(row=1, column=0, sticky="ew", pady=(0, 18))
 
         lnome = tk.Label(formulario, text="Nome da Conta", bg=self.cores["cartao"], fg=self.cores["texto_suave"])
         lnome.grid(row=0, column=0, padx=12, pady=(14, 5), sticky="w")
@@ -137,7 +145,7 @@ class TelaPlanilhaGastos(PaginaBase):
         tabela.column("pagamento", width=140)
         tabela.column("descricao", width=250)
 
-        tabela.grid(row=1, column=0, sticky="ew", pady=(0, 18))
+        tabela.grid(row=2, column=0, sticky="ew", pady=(0, 18))
 
         def carregar_tabela():
             for item in tabela.get_children():
@@ -223,7 +231,7 @@ class TelaPlanilhaGastos(PaginaBase):
             mostrar_mensagem("Gasto marcado como pago.", "lightgreen")
 
         botoes = tk.Frame(corpo, bg=self.cores["fundo"])
-        botoes.grid(row=2, column=0, pady=10)
+        botoes.grid(row=3, column=0, pady=10)
 
         botao_salvar = tk.Button(botoes, text="Salvar", bg=self.cores["informacao"], fg=self.cores["texto_claro"], command=salvar_gasto)
         botao_salvar.grid(row=0, column=0, padx=8)
