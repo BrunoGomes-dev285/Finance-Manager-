@@ -43,6 +43,7 @@ class TelaSaldosReceber(PaginaBase):
         corpo = tk.Frame(self, bg=self.cores["fundo"])
         corpo.grid(row=1, column=0, sticky="nsew", padx=32, pady=12)
         corpo.grid_columnconfigure(0, weight=1)
+        corpo.grid_rowconfigure(1, weight=1)
 
         formulario = self.criar_painel(corpo)
         formulario.grid(row=0, column=0, sticky="ew", pady=(0, 18))
@@ -105,11 +106,33 @@ class TelaSaldosReceber(PaginaBase):
         cdescricao = tk.Entry(formulario, width=88)
         cdescricao.grid(row=3, column=0, columnspan=4, padx=12, pady=(0, 14), sticky="we")
 
+        painel_tabela = self.criar_painel(corpo)
+        painel_tabela.grid(row=1, column=0, sticky="nsew", pady=(0, 18))
+        painel_tabela.grid_columnconfigure(0, weight=1)
+        painel_tabela.grid_rowconfigure(1, weight=1)
+
+        cabecalho_tabela = tk.Frame(painel_tabela, bg=self.cores["cartao"])
+        cabecalho_tabela.grid(row=0, column=0, sticky="ew", padx=22, pady=(18, 10))
+        cabecalho_tabela.grid_columnconfigure(0, weight=1)
+
+        tk.Label(
+            cabecalho_tabela,
+            text="Lista de saldos",
+            bg=self.cores["cartao"],
+            fg=self.cores["texto_escuro"],
+            font=("Segoe UI", 14, "bold"),
+        ).grid(row=0, column=0, sticky="w")
+
+        area_tabela = tk.Frame(painel_tabela, bg=self.cores["cartao"])
+        area_tabela.grid(row=1, column=0, sticky="nsew", padx=22, pady=(0, 22))
+        area_tabela.grid_columnconfigure(0, weight=1)
+        area_tabela.grid_rowconfigure(0, weight=1)
+
         tabela = ttk.Treeview(
-            corpo,
+            area_tabela,
             columns=("nome", "valor", "data", "status", "descricao"),
             show="headings",
-            height=8,
+            selectmode="browse",
         )
 
         tabela.heading("nome", text="Nome")
@@ -124,7 +147,11 @@ class TelaSaldosReceber(PaginaBase):
         tabela.column("status", width=100)
         tabela.column("descricao", width=280)
 
-        tabela.grid(row=1, column=0, sticky="ew", pady=(0, 18))
+        barra_rolagem = ttk.Scrollbar(area_tabela, orient="vertical", command=tabela.yview)
+        tabela.configure(yscrollcommand=barra_rolagem.set)
+
+        tabela.grid(row=0, column=0, sticky="nsew")
+        barra_rolagem.grid(row=0, column=1, sticky="ns")
 
         def carregar_tabela():
             for item in tabela.get_children():
